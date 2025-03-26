@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RECICLA+</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <!-- Logo da empresa -->
+        <img src="images/logo.svg" alt="Logo da RECICLA+" class="logo">
+    </header>
+    
+    <section id="about">
+        <h2>Sobre a RECICLA+</h2>
+        <p>A RECICLA+ nasceu com a missão de <strong>tornar a reciclagem acessível e lucrativa.</strong> 
+        <p>Nosso objetivo é criar uma rede de empresas e comércios parceiros que atuam como pontos de coleta de materiais recicláveis, incentivando práticas sustentáveis e gerando benefícios para todos.</p>
+    </section>
+
+    <section id="Oquefazemos">
+        <h2>O que fazemos?</h2>
+        <p>🚀 Facilitamos a coleta e reciclagem de resíduos.
+        <p> ♻️ Ajudamos empresas a transformar lixo em renda.
+        <p> 🌍 Contribuímos para um planeta mais limpo e sustentável.
+        </p>
+    </section>
+
+    <section id="process">
+        <h2>Etapas do Processo</h2>
+        <ol>
+            <li><strong>Coleta:</strong> Encontre uma EcoBin próxima e deposite seus materiais recicláveis.</li>
+            <li><strong>Reciclagem:</strong> Os materiais são separados e enviados para centros de reciclagem.</li>
+            <li><strong>Troca:</strong> Converta seus pontos de reciclagem em créditos para transporte público ou em lojas parceiras.</li>
+        </ol>
+    </section>
+
+    <section id="faq">
+        <h2>Perguntas Frequentes</h2>
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleAnswer('answer1')"> 1. Como minha empresa pode se tornar um ponto de coleta?</button>
+            <p id="answer1" class="faq-answer">Para participar, basta se cadastrar em nossa plataforma e indicar o espaço disponível para receber materiais recicláveis. Após a aprovação, seu comércio estará visível no nosso mapa de pontos de coleta.</p>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleAnswer('answer2')">2. Quais tipos de materiais recicláveis posso coletar?</button>
+            <p id="answer2" class="faq-answer">Aceitamos plásticos, papel, vidro e metais. Materiais eletrônicos e outros resíduos especiais podem precisar de uma análise específica.</p>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleAnswer('answer3')">3. Como funciona a coleta dos materiais?</button>
+            <p id="answer3" class="faq-answer">Periodicamente, nossa equipe agenda a retirada dos recicláveis em cada ponto de coleta cadastrado. Você será notificado previamente para organizar a entrega dos materiais.</p>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleAnswer('answer4')"> 4. Como minha empresa recebe dinheiro pela reciclagem?</button>
+            <p id="answer4" class="faq-answer">Após a coleta e venda dos recicláveis para centros especializados, uma porcentagem do valor arrecadado é repassada para os pontos de coleta parceiros, garantindo uma renda extra sustentável.</p>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleAnswer('answer5')"> 5. Existe algum custo para participar?</button>
+            <p id="answer5" class="faq-answer">Não! O cadastro e participação na RECICLA+ são gratuitos para os pontos de coleta.</p>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleAnswer('answer6')">6. Como acompanho as coletas e pagamentos?</button>
+            <p id="answer6" class="faq-answer">Dentro da plataforma, você pode visualizar um painel com seu histórico de coletas, saldo acumulado e próximas retiradas programadas.</p>
+        </div>
+        <div class="faq-item">
+            <button class="faq-question" onclick="toggleAnswer('answer7')">7. Posso cancelar minha participação a qualquer momento?</button>
+            <p id="answer7" class="faq-answer">Sim! Caso não queira mais ser um ponto de coleta, basta solicitar o desligamento pelo painel do usuário ou entrar em contato com nosso suporte.</p>
+    </section>
+
+    <footer>
+        <p>&copy; 2025 RECICLA+. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
