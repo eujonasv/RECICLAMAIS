@@ -1,9 +1,15 @@
 // Função para mostrar/ocultar as respostas das perguntas frequentes
 function toggleAnswer(answerId) {
     const answer = document.getElementById(answerId);
-    if (answer.style.display === "block") {
-        answer.style.display = "none";
-    } else {
-        answer.style.display = "block";
-    }
+    const allAnswers = document.querySelectorAll('.faq-answer');
+    
+    // Fecha todas as respostas antes de abrir a desejada
+    allAnswers.forEach(a => {
+        if (a !== answer) {
+            a.style.display = "none";
+        }
+    });
+    
+    // Alterna entre mostrar e esconder a resposta
+    answer.style.display = (answer.style.display === "block") ? "none" : "block";
 }
