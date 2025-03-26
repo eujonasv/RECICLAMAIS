@@ -15,7 +15,7 @@ body {
 
 /* Cabeçalho */
 header {
-    background-color: #f4f4f4;
+    background-color: #f4f4f4; /* Verde para combinar com a marca */
     color: white;
     text-align: center;
     padding: 2rem;
@@ -23,18 +23,10 @@ header {
 
 /* Logo */
 .logo {
-    width: 500px;  /* Ajuste o tamanho conforme necessário */
+    width: 250px;  /* Ajuste o tamanho conforme necessário */
     height: auto;
     display: block;
     margin: 0 auto; /* Centraliza a logo */
-}
-
-header h1 {
-    font-size: 2.5rem;
-}
-
-header p {
-    font-size: 1.2rem;
 }
 
 /* Seções */
