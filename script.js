@@ -13,3 +13,29 @@ function toggleAnswer(answerId) {
     // Alterna entre mostrar e esconder a resposta
     answer.style.display = (answer.style.display === "block") ? "none" : "block";
 }
+
+// Função para controlar o slide de etapas
+let currentStep = 0;
+
+function showStep(step) {
+    const steps = document.querySelectorAll('.step');
+    steps.forEach((stepElement, index) => {
+        stepElement.classList.remove('active');
+        if (index === step) {
+            stepElement.classList.add('active');
+        }
+    });
+}
+
+document.getElementById("nextBtn").addEventListener("click", function () {
+    currentStep = (currentStep + 1) % 3; // Loop de 0 a 2
+    showStep(currentStep);
+});
+
+document.getElementById("prevBtn").addEventListener("click", function () {
+    currentStep = (currentStep - 1 + 3) % 3; // Loop de 0 a 2
+    showStep(currentStep);
+});
+
+// Inicializa a primeira etapa
+showStep(currentStep);

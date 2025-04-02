@@ -15,7 +15,7 @@ body {
 
 /* Cabeçalho */
 header {
-    background-color: #f4f4f4; /* Verde para combinar com a marca */
+    background-color: #f4f4f4;
     color: white;
     text-align: center;
     padding: 2rem;
@@ -44,8 +44,40 @@ h2 {
 }
 
 /* Estilo para as etapas do processo */
-ol {
-    padding-left: 20px;
+.steps-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.step {
+    display: none;
+}
+
+.step.active {
+    display: block;
+}
+
+/* Botões de navegação do slide */
+.buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.slide-btn {
+    background-color: #4CAF50;
+    color: white;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 5px;
+    margin: 0 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.slide-btn:hover {
+    background-color: #45a049;
 }
 
 /* FAQ */

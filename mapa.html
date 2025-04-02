@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapa de Pontos de Coleta</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50;
+            padding: 20px;
+            text-align: center;
+            color: white;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        header nav {
+            margin-top: 10px;
+        }
+
+        header nav a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            margin: 0 15px;
+            transition: color 0.3s ease;
+        }
+
+        header nav a:hover {
+            color: #ffeb3b;
+        }
+
+        #map {
+            height: 80vh;
+            width: 100%;
+        }
+
+        footer {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+
+        .leaflet-container {
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .leaflet-container:hover {
+            transform: scale(1.02);
+        }
+
+        .add-point-btn {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background-color: #ffeb3b;
+            color: #333;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+        }
+
+        .add-point-btn:hover {
+            background-color: #fbc02d;
+        }
+
+        .form-container {
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            width: 300px;
+            display: none;
+        }
+
+        .form-container label {
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .form-container input,
+        .form-container textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .form-container button:hover {
+            background-color: #45a049;
+        }
+
+        .material-checkboxes label {
+            display: inline-block;
+            margin-right: 15px;
+        }
+
+        @media (max-width: 768px) {
+            #map {
+                height: 60vh;
+            }
+
+            .form-container {
+                width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Mapa de Pontos de Coleta</h1>
+        <nav>
+            <a href="index.html">Início</a>
+            <a href="mapa.html">Mapa</a>
+        </nav>
+    </header>
+
+    <button class="add-point-btn" onclick="showForm()">Adicionar Ponto de Coleta</button>
+
+    <div class="form-container" id="form-container">
+        <h3>Adicionar Ponto de Coleta</h3>
+        <form id="point-form" onsubmit="savePoint(event)">
+            <label for="name">Nome do Estabelecimento:</label>
+            <input type="text" id="name" required>
+
+            <label for="address">Endereço:</label>
+            <input type="text" id="address" required>
+
+            <label>Materiais Aceitos:</label>
+            <div class="material-checkboxes">
+                <label><input type="checkbox" value="Metal" class="material"> Metal</label>
+                <label><input type="checkbox" value="Papel" class="material"> Papel</label>
+                <label><input type="checkbox" value="Vidro" class="material"> Vidro</label>
+                <label><input type="checkbox" value="Plástico" class="material"> Plástico</label>
+            </div>
+
+            <button type="submit">Salvar Ponto</button>
+        </form>
+    </div>
+
+    <div id="map"></div>
+
+    <footer>
+        <p>&copy; 2025 RECICLA+. Todos os direitos reservados.</p>
+    </footer>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+    <script>
+        var map = L.map('map').setView([-23.55052, -46.633308], 12);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        var markers = [];
+
+        function showForm() {
+            document.getElementById('form-container').style.display = 'block';
+        }
+
+        function savePoint(event) {
+            event.preventDefault();
+
+            var name = document.getElementById('name').value;
+            var address = document.getElementById('address').value;
+            var materials = [];
+            var checkboxes = document.querySelectorAll('.material:checked');
+            checkboxes.forEach(function(checkbox) {
+                materials.push(checkbox.value);
+            });
+
+            var materialsText = materials.join(', ');
+
+            // Usando a API de Geocodificação do OpenStreetMap (Nominatim)
+            var geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
+
+            fetch(geocodeUrl)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.length > 0) {
+                        var lat = data[0].lat;
+                        var lon = data[0].lon;
+
+                        var latLng = [lat, lon];
+
+                        // Adiciona o marcador no mapa
+                        var marker = L.marker(latLng).addTo(map);
+                        marker.bindPopup("<b>" + name + "</b><br>" + address + "<br><b>Materiais Aceitos:</b> " + materialsText).openPopup();
+
+                        // Salva o marcador
+                        markers.push({ name: name, address: address, materials: materialsText, latLng: latLng });
+
+                        // Limpa o formulário e esconde
+                        document.getElementById('point-form').reset();
+                        document.getElementById('form-container').style.display = 'none';
+
+                        alert("Novo ponto de coleta adicionado!");
+                    } else {
+                        alert("Não foi possível encontrar o endereço.");
+                    }
+                })
+                .catch(err => {
+                    console.error("Erro ao geocodificar o endereço:", err);
+                    alert("Erro ao geocodificar o endereço.");
+                });
+        }
+
+        // Filtro de materiais
+        function filterMarkersByMaterial(material) {
+            markers.forEach(function(markerData) {
+                if (markerData.materials.includes(material)) {
+                    L.marker(markerData.latLng).addTo(map).bindPopup("<b>" + markerData.name + "</b><br>" + markerData.address + "<br><b>Materiais Aceitos:</b> " + markerData.materials);
+                }
+            });
+        }
+
+        // Exemplo de marcador inicial (opcional, pode ser removido)
+        var initialMarker = L.marker([-23.55052, -46.633308]).addTo(map);
+        initialMarker.bindPopup("<b>Ponto de Coleta Principal</b><br>São Paulo").openPopup();
+    </script>
+</body>
+</html>
