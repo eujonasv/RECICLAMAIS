@@ -9,7 +9,7 @@ function toggleAnswer(answerId) {
             a.style.display = "none";
         }
     });
-    
+
     // Alterna entre mostrar e esconder a resposta
     answer.style.display = (answer.style.display === "block") ? "none" : "block";
 }
@@ -28,14 +28,33 @@ function showStep(step) {
 }
 
 document.getElementById("nextBtn").addEventListener("click", function () {
-    currentStep = (currentStep + 1) % 3; // Loop de 0 a 2
+    currentStep = (currentStep + 1) % 3;
     showStep(currentStep);
 });
 
 document.getElementById("prevBtn").addEventListener("click", function () {
-    currentStep = (currentStep - 1 + 3) % 3; // Loop de 0 a 2
+    currentStep = (currentStep - 1 + 3) % 3;
     showStep(currentStep);
 });
 
 // Inicializa a primeira etapa
 showStep(currentStep);
+
+// Botão "Acessar Mapa" da Home
+document.getElementById("btn-mapa").addEventListener("click", function () {
+    const mapaSection = document.getElementById("map");
+    if (mapaSection) {
+        mapaSection.scrollIntoView({ behavior: "smooth" });
+    }
+});
+
+// Efeito ao rolar: mudar a aparência da navbar
+window.addEventListener("scroll", function () {
+    const header = document.querySelector("header");
+    if (window.scrollY > 50) {
+        header.classList.add("scrolled");
+    } else {
+        header.classList.remove("scrolled");
+    }
+});
+

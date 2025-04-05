@@ -83,6 +83,22 @@
             background-color: #fbc02d;
         }
 
+        .filter-buttons {
+            position: absolute;
+            top: 70px;
+            left: 20px;
+            z-index: 1000;
+        }
+
+        .filter-buttons button {
+            background-color: #e0e0e0;
+            border: none;
+            margin: 2px;
+            padding: 6px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
         .form-container {
             position: absolute;
             top: 100px;
@@ -152,6 +168,14 @@
 
     <button class="add-point-btn" onclick="showForm()">Adicionar Ponto de Coleta</button>
 
+    <div class="filter-buttons">
+        <button onclick="filterMap('Metal')">Metal</button>
+        <button onclick="filterMap('Papel')">Papel</button>
+        <button onclick="filterMap('Vidro')">Vidro</button>
+        <button onclick="filterMap('Plástico')">Plástico</button>
+        <button onclick="showAll()">Todos</button>
+    </div>
+
     <div class="form-container" id="form-container">
         <h3>Adicionar Ponto de Coleta</h3>
         <form id="point-form" onsubmit="savePoint(event)">
@@ -183,12 +207,12 @@
 
     <script>
         var map = L.map('map').setView([-23.55052, -46.633308], 12);
+        var markers = [];
+        var currentLayerGroup = L.layerGroup().addTo(map);
 
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(map);
-
-        var markers = [];
 
         function showForm() {
             document.getElementById('form-container').style.display = 'block';
@@ -199,37 +223,28 @@
 
             var name = document.getElementById('name').value;
             var address = document.getElementById('address').value;
-            var materials = [];
-            var checkboxes = document.querySelectorAll('.material:checked');
-            checkboxes.forEach(function(checkbox) {
-                materials.push(checkbox.value);
-            });
-
+            var materials = Array.from(document.querySelectorAll('.material:checked')).map(cb => cb.value);
             var materialsText = materials.join(', ');
 
-            // Usando a API de Geocodificação do OpenStreetMap (Nominatim)
             var geocodeUrl = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(address)}`;
 
             fetch(geocodeUrl)
                 .then(response => response.json())
                 .then(data => {
                     if (data && data.length > 0) {
-                        var lat = data[0].lat;
-                        var lon = data[0].lon;
-
+                        var lat = parseFloat(data[0].lat);
+                        var lon = parseFloat(data[0].lon);
                         var latLng = [lat, lon];
 
-                        // Adiciona o marcador no mapa
-                        var marker = L.marker(latLng).addTo(map);
+                        var marker = L.marker(latLng).addTo(currentLayerGroup);
                         marker.bindPopup("<b>" + name + "</b><br>" + address + "<br><b>Materiais Aceitos:</b> " + materialsText).openPopup();
 
-                        // Salva o marcador
-                        markers.push({ name: name, address: address, materials: materialsText, latLng: latLng });
+                        var newPoint = { name, address, materials: materialsText, latLng };
+                        markers.push(newPoint);
+                        saveToLocalStorage();
 
-                        // Limpa o formulário e esconde
                         document.getElementById('point-form').reset();
                         document.getElementById('form-container').style.display = 'none';
-
                         alert("Novo ponto de coleta adicionado!");
                     } else {
                         alert("Não foi possível encontrar o endereço.");
@@ -241,18 +256,43 @@
                 });
         }
 
-        // Filtro de materiais
-        function filterMarkersByMaterial(material) {
-            markers.forEach(function(markerData) {
-                if (markerData.materials.includes(material)) {
-                    L.marker(markerData.latLng).addTo(map).bindPopup("<b>" + markerData.name + "</b><br>" + markerData.address + "<br><b>Materiais Aceitos:</b> " + markerData.materials);
+        function saveToLocalStorage() {
+            localStorage.setItem("markers", JSON.stringify(markers));
+        }
+
+        function loadFromLocalStorage() {
+            const stored = localStorage.getItem("markers");
+            if (stored) {
+                const savedMarkers = JSON.parse(stored);
+                savedMarkers.forEach(m => {
+                    var marker = L.marker(m.latLng).addTo(currentLayerGroup);
+                    marker.bindPopup("<b>" + m.name + "</b><br>" + m.address + "<br><b>Materiais Aceitos:</b> " + m.materials);
+                    markers.push(m);
+                });
+            }
+        }
+
+        function filterMap(material) {
+            currentLayerGroup.clearLayers();
+            markers.forEach(marker => {
+                if (marker.materials.includes(material)) {
+                    L.marker(marker.latLng)
+                        .addTo(currentLayerGroup)
+                        .bindPopup("<b>" + marker.name + "</b><br>" + marker.address + "<br><b>Materiais Aceitos:</b> " + marker.materials);
                 }
             });
         }
 
-        // Exemplo de marcador inicial (opcional, pode ser removido)
-        var initialMarker = L.marker([-23.55052, -46.633308]).addTo(map);
-        initialMarker.bindPopup("<b>Ponto de Coleta Principal</b><br>São Paulo").openPopup();
+        function showAll() {
+            currentLayerGroup.clearLayers();
+            markers.forEach(marker => {
+                L.marker(marker.latLng)
+                    .addTo(currentLayerGroup)
+                    .bindPopup("<b>" + marker.name + "</b><br>" + marker.address + "<br><b>Materiais Aceitos:</b> " + marker.materials);
+            });
+        }
+
+        loadFromLocalStorage();
     </script>
 </body>
 </html>
