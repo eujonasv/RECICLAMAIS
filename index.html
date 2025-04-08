@@ -1,99 +1,164 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>RECICLA+</title>
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
     <header>
         <div class="navbar">
-            <a href="index.html">
-                <img src="images/logobranca.svg" alt="Logo RECICLA+" class="logo">
-              </a>              
-          <nav>
-            <ul>
-              <li><a href="index.html">Início</a></li>
-              <li><a href="mapa.html">Mapa de Coleta</a></li>
-              <li><a href="#">Sobre</a></li>
-              <li><a href="#">Contato</a></li>
-            </ul>
-          </nav>
+            <a href="index.html" aria-label="Página inicial RECICLA+">
+                <img src="images/logobranca.svg" alt="Logo da RECICLA+" class="logo" />
+            </a>
+
+            <!-- Botão hambúrguer -->
+            <button class="menu-toggle" aria-label="Abrir menu">
+                ☰
+            </button>
+
+            <!-- Menu de navegação -->
+            <nav class="nav-links">
+                <ul>
+                    <li><a href="index.html">Início</a></li>
+                    <li><a href="mapa.html">Mapa de Coleta</a></li>
+                    <li><a href="#">Sobre</a></li>
+                    <li><a href="#">Contato</a></li>
+                </ul>
+            </nav>
         </div>
-      </header>
-    
+    </header>
+
+    <main>
+        <!-- TODO SEU CONTEÚDO MANTIDO AQUI 👇 -->
+        <!-- ... igualzinho o que você já tinha ... -->
+        <!-- Pode colar o restante do conteúdo das seções (sobre, o que fazemos, processo, FAQ etc) normalmente aqui -->
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
+
+<main>
     <section id="about">
         <h2>Sobre a RECICLA+</h2>
         <p>A RECICLA+ nasceu com a missão de <strong>tornar a reciclagem acessível e lucrativa.</strong></p>
         <p>Nosso objetivo é criar uma rede de empresas e comércios parceiros que atuam como pontos de coleta de materiais recicláveis, incentivando práticas sustentáveis e gerando benefícios para todos.</p>
     </section>
 
-    <section id="Oquefazemos">
+    <section id="O-que-fazemos">
         <h2>O que fazemos?</h2>
-        <p>🚀 Facilitamos a coleta e reciclagem de resíduos.</p>
-        <p> ♻️ Ajudamos empresas a transformar lixo em renda.</p>
-        <p> 🌍 Contribuímos para um planeta mais limpo e sustentável.</p>
+        <ul>
+            <li>🚀 Facilitamos a coleta e reciclagem de resíduos.</li>
+            <li>♻️ Ajudamos empresas a transformar lixo em renda.</li>
+            <li>🌍 Contribuímos para um planeta mais limpo e sustentável.</li>
+        </ul>
     </section>
 
-    <section id="process">
-        <h2>Etapas do Processo</h2>
+    <!--como funciona-->
+    <section id="como-funciona">
+        <h2>Como funciona</h2>
         <div class="steps-container">
-            <div class="step" id="step1">
-                <h3>1. Coleta</h3>
-                <p>Encontre um ponto de coleta próximo e deposite seus materiais recicláveis.</p>
+            <div class="step-display">
+                <div class="step-number" id="stepNumber">1</div>
+                <div class="buttons">
+                    <button class="slide-btn" id="prevBtn">
+                        <span class="icon">◀</span>
+                        <span class="label">Anterior</span>
+                    </button>
+                    <button class="slide-btn" id="nextBtn">
+                        <span class="label">Próximo</span>
+                        <span class="icon">▶</span>
+                    </button>
+                </div>
             </div>
-            <div class="step" id="step2">
-                <h3>2. Reciclagem</h3>
-                <p>Os materiais são separados e enviados para centros de reciclagem.</p>
+            <div class="step-content">
+                <div class="step active">
+                    <h3>Coleta</h3>
+                    <p>Encontre um ponto de coleta próximo e deposite seus materiais recicláveis.</p>
+                </div>
+                <div class="step">
+                    <h3>Reciclagem</h3>
+                    <p>Os materiais são separados e enviados para centros de reciclagem.</p>
+                </div>
+                <div class="step">
+                    <h3>Troca</h3>
+                    <p>Converta seus pontos de reciclagem em créditos para transporte público ou em lojas parceiras.</p>
+                </div>
             </div>
-            <div class="step" id="step3">
-                <h3>3. Troca</h3>
-                <p>Converta seus pontos de reciclagem em créditos para transporte público ou em lojas parceiras.</p>
-            </div>
-        </div>
-        <div class="buttons">
-            <button id="prevBtn" class="slide-btn">Anterior</button>
-            <button id="nextBtn" class="slide-btn">Próximo</button>
         </div>
     </section>
 
-    <section id="faq">
-        <h2>Perguntas Frequentes</h2>
-        <div class="faq-item">
-            <button class="faq-question" onclick="toggleAnswer('answer1')"> 1. Como minha empresa pode se tornar um ponto de coleta?</button>
-            <p id="answer1" class="faq-answer">Para participar, basta se cadastrar em nossa plataforma e indicar o espaço disponível para receber materiais recicláveis. Após a aprovação, seu comércio estará visível no nosso mapa de pontos de coleta.</p>
-        </div>
-        <div class="faq-item">
-            <button class="faq-question" onclick="toggleAnswer('answer2')">2. Quais tipos de materiais recicláveis posso coletar?</button>
-            <p id="answer2" class="faq-answer">Aceitamos plásticos, papel, vidro e metais. Materiais eletrônicos e outros resíduos especiais podem precisar de uma análise específica.</p>
-        </div>
-        <div class="faq-item">
-            <button class="faq-question" onclick="toggleAnswer('answer3')">3. Como funciona a coleta dos materiais?</button>
-            <p id="answer3" class="faq-answer">Periodicamente, nossa equipe agenda a retirada dos recicláveis em cada ponto de coleta cadastrado. Você será notificado previamente para organizar a entrega dos materiais.</p>
-        </div>
-        <div class="faq-item">
-            <button class="faq-question" onclick="toggleAnswer('answer4')"> 4. Como minha empresa recebe dinheiro pela reciclagem?</button>
-            <p id="answer4" class="faq-answer">Após a coleta e venda dos recicláveis para centros especializados, uma porcentagem do valor arrecadado é repassada para os pontos de coleta parceiros, garantindo uma renda extra sustentável.</p>
-        </div>
-        <div class="faq-item">
-            <button class="faq-question" onclick="toggleAnswer('answer5')"> 5. Existe algum custo para participar?</button>
-            <p id="answer5" class="faq-answer">Não! O cadastro e participação na RECICLA+ são gratuitos para os pontos de coleta.</p>
-        </div>
-        <div class="faq-item">
-            <button class="faq-question" onclick="toggleAnswer('answer6')">6. Como acompanho as coletas e pagamentos?</button>
-            <p id="answer6" class="faq-answer">Dentro da plataforma, você pode visualizar um painel com seu histórico de coletas, saldo acumulado e próximas retiradas programadas.</p>
-        </div>
-        <div class="faq-item">
-            <button class="faq-question" onclick="toggleAnswer('answer7')">7. Posso cancelar minha participação a qualquer momento?</button>
-            <p id="answer7" class="faq-answer">Sim! Caso não queira mais ser um ponto de coleta, basta solicitar o desligamento pelo painel do usuário ou entrar em contato com nosso suporte.</p>
-        </div>
-    </section>
+    <!-- FAQ já está perfeito, mantido sem alterações -->
+</main>
+
+                 
+
+        <section id="faq">
+            <h2>Perguntas Frequentes</h2>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleAnswer('answer1')" aria-expanded="false" aria-controls="answer1">
+                    1. Como minha empresa pode se tornar um ponto de coleta?
+                </button>
+                <p id="answer1" class="faq-answer" hidden>
+                    Para participar, basta se cadastrar em nossa plataforma e indicar o espaço disponível para receber materiais recicláveis. Após a aprovação, seu comércio estará visível no nosso mapa de pontos de coleta.
+                </p>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleAnswer('answer2')" aria-expanded="false" aria-controls="answer2">
+                    2. Quais tipos de materiais recicláveis posso coletar?
+                </button>
+                <p id="answer2" class="faq-answer" hidden>
+                    Aceitamos plásticos, papel, vidro e metais. Materiais eletrônicos e outros resíduos especiais podem precisar de uma análise específica.
+                </p>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleAnswer('answer3')" aria-expanded="false" aria-controls="answer3">
+                    3. Como funciona a coleta dos materiais?
+                </button>
+                <p id="answer3" class="faq-answer" hidden>
+                    Periodicamente, nossa equipe agenda a retirada dos recicláveis em cada ponto de coleta cadastrado. Você será notificado previamente para organizar a entrega dos materiais.
+                </p>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleAnswer('answer4')" aria-expanded="false" aria-controls="answer4">
+                    4. Como minha empresa recebe dinheiro pela reciclagem?
+                </button>
+                <p id="answer4" class="faq-answer" hidden>
+                    Após a coleta e venda dos recicláveis para centros especializados, uma porcentagem do valor arrecadado é repassada para os pontos de coleta parceiros, garantindo uma renda extra sustentável.
+                </p>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleAnswer('answer5')" aria-expanded="false" aria-controls="answer5">
+                    5. Existe algum custo para participar?
+                </button>
+                <p id="answer5" class="faq-answer" hidden>
+                    Não! O cadastro e participação na RECICLA+ são gratuitos para os pontos de coleta.
+                </p>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleAnswer('answer6')" aria-expanded="false" aria-controls="answer6">
+                    6. Como acompanho as coletas e pagamentos?
+                </button>
+                <p id="answer6" class="faq-answer" hidden>
+                    Dentro da plataforma, você pode visualizar um painel com seu histórico de coletas, saldo acumulado e próximas retiradas programadas.
+                </p>
+            </div>
+            <div class="faq-item">
+                <button class="faq-question" onclick="toggleAnswer('answer7')" aria-expanded="false" aria-controls="answer7">
+                    7. Posso cancelar minha participação a qualquer momento?
+                </button>
+                <p id="answer7" class="faq-answer" hidden>
+                    Sim! Caso não queira mais ser um ponto de coleta, basta solicitar o desligamento pelo painel do usuário ou entrar em contato com nosso suporte.
+                </p>
+            </div>
+        </section>
+    </main>
 
     <footer>
         <p>&copy; 2025 RECICLA+. Todos os direitos reservados.</p>
     </footer>
-
-    <script src="script.js"></script>
 </body>
 </html>
